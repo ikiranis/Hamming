@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Main {
     private static final int arraySize = (int) Math.pow(2, 28);   // Μέγεθος array σε δυνάμεις του 2
-    private static final int threadsNumber = (int) Math.pow(2, 6);  // Πλήθος threads σε δυνάμεις του 2
+    private static final int threadsNumber = (int) Math.pow(2, 4);  // Πλήθος threads σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
 
     // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
@@ -90,6 +90,6 @@ public class Main {
         // Τελικές εκτυπώσεις
         System.out.println("\nΤερματισμός όλων των threads");
         System.out.println("\nΑπόσταση Hamming: " + calcTotalHamming());
-        System.out.println("\nΧρονική διάρκεια: " + (end - start) + "msec");
+        System.out.println("\nΧρονική διάρκεια επεξεργασίας: " + (end - start) + "msec");
     }
 }
