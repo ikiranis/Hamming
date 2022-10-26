@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Main {
-    private static final int arraySize = (int) Math.pow(2, 28);   // Μέγεθος array σε δυνάμεις του 2
-    private static final int threadsNumber = (int) Math.pow(2, 4);  // Πλήθος threads σε δυνάμεις του 2
+    private static final int arraySize = (int) Math.pow(2, 30);   // Μέγεθος array σε δυνάμεις του 2
+    private static final int threadsNumber = (int) Math.pow(2, 2);  // Πλήθος threads σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
 
     // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
@@ -69,6 +69,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println(Runtime.getRuntime().maxMemory()/1073741824);
+
         System.out.println("Δημιουργία arrays...\n");
         // Δημιουργία των arrays
         int[] a = generateArray();
