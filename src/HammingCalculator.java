@@ -1,30 +1,44 @@
+/**
+ * Κλάση υπολογισμού απόστασης Hamming
+ */
 public class HammingCalculator extends Thread {
-    private int[] A;
-    private int[] B;
+    private int[] a;
+    private int[] b;
     private int hamming = 0;
     private int start;
-    private int end;
+    private int batchSize;
 
-    public HammingCalculator(int[] A, int[] B, int start, int end) {
-        this.A = A;
-        this.B = B;
+    // Constructor
+    public HammingCalculator(int[] a, int[] b, int start, int batchSize) {
+        this.a = a;
+        this.b = b;
         this.start = start;
-        this.end = end;
+        this.batchSize = batchSize;
     }
 
     @Override
     public void run() {
+        System.out.println(Thread.currentThread().getName() + " started. Επεξεργασία " + batchSize + " ψηφίων");
         calcSimilarBits();
+        System.out.println(Thread.currentThread().getName() + " finished");
     }
 
+    /**
+     * Υπολογισμός της απόστασης Hamming, με σύγκριση των ψηφίων του κάθε array
+     */
     private void calcSimilarBits() {
-        for (int i=start; i<end; i++) {
-            if(A[i] == B[i]) {
+        for (int i=start; i<(start + batchSize); i++) {
+            if(a[i] == b[i]) {
                 hamming++;
             }
         }
     }
 
+    /**
+     * Hamming getter
+     *
+     * @return
+     */
     public int getHamming() {
         return hamming;
     }
