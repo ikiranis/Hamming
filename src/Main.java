@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Main {
     private static final int arraySize = (int) Math.pow(2, 30);   // Μέγεθος array σε δυνάμεις του 2
-    private static final int threadsNumber = (int) Math.pow(2, 2);  // Πλήθος threads σε δυνάμεις του 2
+    private static final int threadsNumber = (int) Math.pow(2, 3);  // Πλήθος threads σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
 
     // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
