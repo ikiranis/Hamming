@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Main {
-    private static final int arraySize = (int) Math.pow(2, 30);   // Μέγεθος array σε δυνάμεις του 2
+    private static final int arraySize = (int) Math.pow(2, 20);   // Μέγεθος array σε δυνάμεις του 2
     private static final int threadsNumber = (int) Math.pow(2, 3);  // Πλήθος threads σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
 
@@ -43,9 +43,9 @@ public class Main {
      * Αναμονή από το thread της main, για να τερματίσουν όλα τα threads
      */
     private static void waitThreads() {
-        for(int i=0; i<hammingThreads.length; i++) {
+        for (HammingCalculator calculator: hammingThreads) {
             try {
-                hammingThreads[i].join();
+                calculator.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -61,8 +61,9 @@ public class Main {
     private static int calcTotalHamming() {
         int totalHamming = 0;
 
-        for(int i=0; i<hammingThreads.length; i++) {
-            totalHamming += hammingThreads[i].getHamming();
+        for (HammingCalculator calculator: hammingThreads) {
+            totalHamming += calculator.getHamming();
+
         }
 
         return totalHamming;
