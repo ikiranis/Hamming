@@ -3,8 +3,8 @@ import java.util.Random;
 public class Main {
     private static final int arraySize = (int) Math.pow(2, 30);   // Μέγεθος array σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
-
-    private static HammingCalculator hammingThreads[];
+    private static HammingCalculator hammingThreads[]; // Array των threads
+    private static final int maxThreads = 4;    // Μέγιστος αριθμός threads, σε δυνάμεις του 2
 
     /**
      * Δημιουργία array με τυχαίες τιμές 0,1
@@ -72,7 +72,7 @@ public class Main {
         int[] a = generateArray();
         int[] b = generateArray();
 
-        for (int i=0; i<5; i++) {
+        for (int i=0; i<=maxThreads; i++) {
             int threadsNumber = (int) Math.pow(2, i);  // Πλήθος threads σε δυνάμεις του 2
 
             // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
@@ -82,7 +82,10 @@ public class Main {
             long start = System.currentTimeMillis();
 
             System.out.println("\n-----------------------------------------------------------------");
-            System.out.println("Επεξεργασία " + arraySize + " ψηφίων, με " + threadsNumber + ((threadsNumber>1) ? " threads" : " thread") + "\n");
+            System.out.println("Επεξεργασία " + arraySize + " ψηφίων, με "
+                    + threadsNumber
+                    + ((threadsNumber>1) ? " threads" : " thread")
+                    + "\n");
 
             // Εκκίνηση και αναμονή των threads
             startThreads(a, b, (arraySize / threadsNumber));
