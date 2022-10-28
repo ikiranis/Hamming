@@ -1,15 +1,10 @@
 import java.util.Random;
 
 public class Main {
-    private static final int arraySize = (int) Math.pow(2, 20);   // Μέγεθος array σε δυνάμεις του 2
-    private static final int threadsNumber = (int) Math.pow(2, 3);  // Πλήθος threads σε δυνάμεις του 2
+    private static final int arraySize = (int) Math.pow(2, 30);   // Μέγεθος array σε δυνάμεις του 2
     private static final Random random = new Random();  // Αρχικοποίηση του random
 
-    // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
-    private static HammingCalculator hammingThreads[] = new HammingCalculator[threadsNumber];
-
-    // Υπολογισμός του τμήματος του array που θα επεξεργαστεί το κάθε thread
-    private static int batchSize = arraySize / threadsNumber;
+    private static HammingCalculator hammingThreads[];
 
     /**
      * Δημιουργία array με τυχαίες τιμές 0,1
@@ -31,8 +26,9 @@ public class Main {
      *
      * @param a int[]
      * @param b int[]
+     * @param batchSize int
      */
-    private static void startThreads(int[] a, int[] b) {
+    private static void startThreads(int[] a, int[] b, int batchSize) {
         for(int i=0; i<hammingThreads.length; i++) {
             hammingThreads[i] = new HammingCalculator(a, b, i * batchSize, batchSize);
             hammingThreads[i].start();
@@ -70,29 +66,37 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println(Runtime.getRuntime().maxMemory()/1073741824);
-
         System.out.println("Δημιουργία arrays...\n");
+
         // Δημιουργία των arrays
         int[] a = generateArray();
         int[] b = generateArray();
 
-        // Αρχικοποίηση του χρόνου που αρχίζει η επεξεργασία
-        long start = System.currentTimeMillis();
+        for (int i=0; i<5; i++) {
+            int threadsNumber = (int) Math.pow(2, i);  // Πλήθος threads σε δυνάμεις του 2
 
-        System.out.println("Επεξεργασία " + arraySize + " ψηφίων, με " + threadsNumber + " threads...\n");
+            // Αρχικοποίηση του array των threads με την κλάση HammingCalculator
+            hammingThreads = new HammingCalculator[threadsNumber];
 
-        // Εκκίνηση και αναμονή των threads
-        startThreads(a, b);
+            // Αρχικοποίηση του χρόνου που αρχίζει η επεξεργασία
+            long start = System.currentTimeMillis();
 
-        waitThreads();
+            System.out.println("\n-----------------------------------------------------------------");
+            System.out.println("Επεξεργασία " + arraySize + " ψηφίων, με " + threadsNumber + ((threadsNumber>1) ? " threads" : " thread") + "\n");
 
-        // Τερματισμός του χρόνου επεξεργασίας
-        long end = System.currentTimeMillis();
+            // Εκκίνηση και αναμονή των threads
+            startThreads(a, b, (arraySize / threadsNumber));
 
-        // Τελικές εκτυπώσεις
-        System.out.println("\nΤερματισμός όλων των threads");
-        System.out.println("\nΑπόσταση Hamming: " + calcTotalHamming());
-        System.out.println("\nΧρονική διάρκεια επεξεργασίας: " + (end - start) + "msec");
+            waitThreads();
+
+            // Τερματισμός του χρόνου επεξεργασίας
+            long end = System.currentTimeMillis();
+
+            // Τελικές εκτυπώσεις
+            System.out.println("\nΤερματισμός όλων των threads");
+            System.out.println("\nΑπόσταση Hamming: " + calcTotalHamming());
+            System.out.println("\nΧρονική διάρκεια επεξεργασίας: " + (end - start) + "msec");
+        }
+
     }
 }
