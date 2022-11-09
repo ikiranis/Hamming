@@ -59,7 +59,6 @@ public class Main {
 
         for (HammingCalculator calculator: hammingThreads) {
             totalHamming += calculator.getHamming();
-
         }
 
         return totalHamming;
