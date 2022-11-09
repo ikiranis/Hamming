@@ -16,6 +16,9 @@ public class HammingCalculator extends Thread {
         this.batchSize = batchSize;
     }
 
+    /**
+     * Από εδώ αρχίζει να τρέχει το thread και εκτελεί τον υπολογισμό της απόστασης Hamming
+     */
     @Override
     public void run() {
         System.out.println(Thread.currentThread().getName() + " started. Επεξεργασία " + batchSize + " ψηφίων");
